@@ -11,7 +11,7 @@ public class CustomOpenAPIConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI().info(new Info()
-                .title("OPEN API SISTEMA DE Ventas")
+                .title("OPEN API TURISMO")
                 .version("0.0.1")
                 .description("Servicios web de ventas")
                 .termsOfService("http://swagger.io/terms/")
