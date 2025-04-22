@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "roles")
 public class Rol {
-    public enum RolNombre { ADMIN, USER}
+    public enum RolNombre { ADMIN, USER, PROVEEDOR}
     @Id
     @Column(name = "id_rol")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

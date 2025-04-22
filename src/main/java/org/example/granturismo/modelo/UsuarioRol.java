@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "upeu_usuario_rol")
+@Table(name = "usuario_rol")
 @IdClass(UsuarioRolPK.class)
 public class UsuarioRol {
     @Id

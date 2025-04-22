@@ -1,5 +1,8 @@
 package org.example.granturismo.mappers;
 
+import org.example.granturismo.dtos.ResenaDTO;
+import org.example.granturismo.modelo.Resena;
+
 import java.util.List;
 
 public interface GenericMapper<D, E> {
