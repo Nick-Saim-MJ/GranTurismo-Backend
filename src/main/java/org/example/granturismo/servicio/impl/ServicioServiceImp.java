@@ -64,7 +64,7 @@ public class ServicioServiceImp extends CrudGenericoServiceImp<Servicio, Long> i
         TipoServicio tipo = tipoServicioRepository.findById(dto.tipo())
                 .orElseThrow(() -> new EntityNotFoundException("Tipo de Servicio no encontrado"));
 
-        servicio.setTipo(tipo);
+        servicioupdate.setTipo(tipo); // CORREGIDO ✅
 
         Servicio servicioActualizado = repo.save(servicioupdate);
         return servicioMapper.toDTO(servicioActualizado);
