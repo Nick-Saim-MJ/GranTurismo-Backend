@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 
 
-@Table(name = "proveedores")
+@Table(name = "proveedor")
 public class Proveedor {
 
     @Id
@@ -37,9 +37,6 @@ public class Proveedor {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "fecha_registro", nullable = false)
     private LocalDateTime fechaRegistro;
-
-    @Column(name = "estado", nullable = false)
-    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario",

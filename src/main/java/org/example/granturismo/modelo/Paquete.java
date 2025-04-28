@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 @Table(name = "paquetes")
 public class Paquete {
 
+    public enum Estado { DISPONIBLE, AGOTADO}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paquete")
@@ -29,11 +31,18 @@ public class Paquete {
     @Column(name = "descripcion", nullable = false, columnDefinition = "TEXT")
     private String descripcion;
 
-    @Column(name = "precio", nullable = false)
-    private BigDecimal precio;
-
     @Column(name = "imagen_url", nullable = false)
     private String imagenUrl;
+
+    @Column(name = "precio_total", nullable = false)
+    private BigDecimal precioTotal;
+
+    @Column(name = "estado", nullable = false, length = 50)
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
+    @Column(name = "duracion_dias", nullable = false)
+    private Integer duracionDias;
 
     @Column(name = "localidad", nullable = false)
     private String localidad;
@@ -56,5 +65,10 @@ public class Paquete {
     @JoinColumn(name = "id_proveedor", referencedColumnName = "id_proveedor",
             nullable = false, foreignKey = @ForeignKey(name = "FK_PAQUETE_PROVEEDOR"))
     private Proveedor proveedor;
+
+    @ManyToOne
+    @JoinColumn(name = "id_destino", referencedColumnName = "id_destino",
+            nullable = false, foreignKey = @ForeignKey(name = "FK_PAQUETE_DESTINO"))
+    private Destino destino;
 
 }

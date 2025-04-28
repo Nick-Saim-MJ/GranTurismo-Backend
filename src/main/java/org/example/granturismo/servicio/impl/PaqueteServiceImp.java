@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import org.example.granturismo.dtos.PaqueteDTO;
 import org.example.granturismo.mappers.PaqueteMapper;
+import org.example.granturismo.modelo.Destino;
 import org.example.granturismo.modelo.Paquete;
 import org.example.granturismo.modelo.Proveedor;
+import org.example.granturismo.modelo.Rol;
 import org.example.granturismo.repositorio.ICrudGenericoRepository;
 import org.example.granturismo.repositorio.IPaqueteRepository;
 import org.example.granturismo.repositorio.IProveedorRepository;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.example.granturismo.repositorio.*;
 
 import javax.sql.DataSource;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,6 +36,7 @@ public class PaqueteServiceImp extends CrudGenericoServiceImp<Paquete, Long> imp
     private final IPaqueteRepository repo;
     private final PaqueteMapper paqueteMapper;
     private final IProveedorRepository proveedorRepository;
+    private final IDestinoRepository destinoRepository;
 
     @Override
     protected ICrudGenericoRepository<Paquete, Long> getRepo() {
@@ -46,8 +50,11 @@ public class PaqueteServiceImp extends CrudGenericoServiceImp<Paquete, Long> imp
 
         Proveedor proveedor = proveedorRepository.findById(dto.proveedor())
                 .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
+        Destino destino = destinoRepository.findById(dto.destino())
+                .orElseThrow(() -> new EntityNotFoundException("Destino no encontrado"));
 
         paquete.setProveedor(proveedor);
+        paquete.setDestino(destino);
 
         Paquete paqueteGuardado = repo.save(paquete);
         return paqueteMapper.toDTO(paqueteGuardado);
@@ -63,11 +70,17 @@ public class PaqueteServiceImp extends CrudGenericoServiceImp<Paquete, Long> imp
 
         Proveedor proveedor = proveedorRepository.findById(dto.proveedor())
                 .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
+        Destino destino = destinoRepository.findById(dto.destino())
+                .orElseThrow(() -> new EntityNotFoundException("Destino no encontrado"));
 
         paquetex.setProveedor(proveedor);
+        paquetex.setDestino(destino);
 
         Paquete paqueteActualizado = repo.save(paquetex);
         return paqueteMapper.toDTO(paqueteActualizado);
+    }
+    public Optional<Paquete> getByNombre(Paquete.Estado estado) {
+        return repo.findByEstado(estado);
     }
 
 

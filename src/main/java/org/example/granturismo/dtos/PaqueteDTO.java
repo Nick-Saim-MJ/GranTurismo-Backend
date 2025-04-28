@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.granturismo.modelo.Paquete;
 import org.example.granturismo.modelo.Proveedor;
 
 import java.math.BigDecimal;
@@ -25,12 +26,17 @@ public class PaqueteDTO {
     @NotNull(message = "La descripción no puede ser nula")
     private String descripcion;
 
+    private String imagenUrl;
+
     @NotNull(message = "El precio no puede ser nulo")
     @DecimalMin(value = "0.0", inclusive = true, message = "El precio debe ser mayor o igual a 0")
-    private BigDecimal precio;
+    private BigDecimal precioTotal;
 
+    @NotNull(message = "El Estado no puede ser nulo")
+    private Paquete.Estado estado;
 
-    private String imagenUrl;
+    @NotNull(message = "La Duracion no puede ser nula")
+    private Integer duracionDias;
 
     @NotNull(message = "La localidad no puede ser nula")
     private String localidad;
@@ -41,14 +47,17 @@ public class PaqueteDTO {
     @NotNull(message = "Los Cupos no pueden ser nulos")
     private Integer cuposMaximos;
 
-
-    @NotNull(message = "El Proveedor no puede ser nulo")
-    private ProveedorDTO proveedor;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaInicio;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaFin;
+
+    @NotNull(message = "El Proveedor no puede ser nulo")
+    private ProveedorDTO proveedor;
+
+    @NotNull(message = "El Destino no puede ser nulo")
+    private DestinoDTO destino;
+
 
     public record PaqueteCADTO(
             Long idPaquete,
@@ -57,21 +66,27 @@ public class PaqueteDTO {
             String titulo,
             @NotNull(message = "La Descripción no puede ser nula")
             String descripcion,
-            @NotNull(message = "El Precio no puede ser nulo")
-            BigDecimal precio,
             String imagenUrl,
+            @NotNull(message = "El Precio no puede ser nulo")
+            BigDecimal precioTotal,
+            @NotNull
+            Paquete.Estado estado,
+            @NotNull
+            Integer duracionDias,
             @NotNull(message = "La Localidad no puede ser nula")
             String localidad,
             @NotNull(message = "La Actividad no puede ser nula")
             String tipoActividad,
             @NotNull(message = "Los Cupos no pueden ser nulos")
             Integer cuposMaximos,
-            @NotNull(message = "El Proveedor no puede ser nulo")
-            Long proveedor,
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime fechaInicio,
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-            LocalDateTime fechaFin
+            LocalDateTime fechaFin,
+            @NotNull(message = "El Proveedor no puede ser nulo")
+            Long proveedor,
+            @NotNull(message = "El Destino no puede ser nulo")
+            Long destino
 
     ){}
 }

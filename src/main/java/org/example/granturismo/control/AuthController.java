@@ -23,6 +23,7 @@ public class AuthController {
     private final IUsuarioService userService;
     private final JwtTokenUtil jwtTokenUtil;
     private final JwtUserDetailsService jwtUserDetailsService;
+
     @PostMapping("/login")
     public ResponseEntity<UsuarioDTO> login(@RequestBody @Valid UsuarioDTO.CredencialesDto credentialsDto, HttpServletRequest request) {
         UsuarioDTO userDto = userService.login(credentialsDto);

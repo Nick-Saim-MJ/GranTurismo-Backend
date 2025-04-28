@@ -22,7 +22,6 @@ public class ProveedorDTO {
     private String telefono;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaRegistro;
-    private String estado;
     private UsuarioDTO usuario;
 
 
@@ -33,7 +32,6 @@ public class ProveedorDTO {
             String telefono,
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime fechaRegistro,
-            String estado,
             Long usuario
     ){}
 }
