@@ -10,4 +10,5 @@ public interface UsuarioMapper extends GenericMapper<UsuarioDTO, Usuario> {
 
     @Mapping(target = "clave", ignore = true)
     Usuario toEntityFromCADTO(UsuarioDTO.UsuarioCrearDto usuarioCrearDto);
+
 }

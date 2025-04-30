@@ -35,6 +35,7 @@ public class DestinoDTO {
             Long idDestino,
             String nombre,
             String descripcion,
+            String ubicacion,
             String imagenUrl,
             String latitud,
             String longitud,

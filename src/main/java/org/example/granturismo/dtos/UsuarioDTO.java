@@ -15,8 +15,6 @@ public class UsuarioDTO {
     private String user;
     //@NotNull
     //private String clave;
-    @NotNull
-    private String token;
 
     public record CredencialesDto(String user, char[] clave) { }
 

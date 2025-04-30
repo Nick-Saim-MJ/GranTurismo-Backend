@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -70,5 +71,8 @@ public class Paquete {
     @JoinColumn(name = "id_destino", referencedColumnName = "id_destino",
             nullable = false, foreignKey = @ForeignKey(name = "FK_PAQUETE_DESTINO"))
     private Destino destino;
+
+    @OneToMany(mappedBy = "paquete", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PaqueteDetalle> detalles;
 
 }
