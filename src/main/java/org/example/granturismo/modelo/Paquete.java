@@ -75,4 +75,7 @@ public class Paquete {
     @OneToMany(mappedBy = "paquete", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaqueteDetalle> detalles;
 
+    @OneToMany(mappedBy = "paquete", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActividadDetalle> actividadDetalles;
+
 }
