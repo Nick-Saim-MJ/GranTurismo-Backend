@@ -47,19 +47,28 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        //Desde Spring Boot 3.0+
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers(HttpMethod.POST, "/users/login",
-                                "users/register").permitAll()
+                        // *** MODIFICACIÓN AQUÍ: AÑADIR /users/verificar Y USAR antMatcher CONSISTENTEMENTE ***
+                        .requestMatchers(antMatcher(HttpMethod.POST, "/users/login")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.POST, "/users/register")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.POST, "/users/verificar")).permitAll() // <-- Asegura que verificar también sea público
+                        // *** FIN MODIFICACIÓN ***
+
+                        // Otras rutas públicas que ya tenías:
                         .requestMatchers(antMatcher("/mail/**")).permitAll()
-                        .requestMatchers(antMatcher("/doc/**")).permitAll()
-                        .requestMatchers(antMatcher("/v3/**")).permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(antMatcher("/doc/**")).permitAll() // Swagger docs
+                        .requestMatchers(antMatcher("/v3/**")).permitAll() // Swagger v3 api-docs
+
+                        .anyRequest().authenticated() // Cualquier otra petición requiere autenticación
                 )
-                .formLogin(AbstractHttpConfigurer::disable)
-                .exceptionHandling(e -> e.authenticationEntryPoint(jwtAuthenticationEntryPoint));
+                .formLogin(AbstractHttpConfigurer::disable) // Deshabilita form login
+                .exceptionHandling(e -> e.authenticationEntryPoint(jwtAuthenticationEntryPoint)); // Manejador de errores de autenticación
+
+        // Configuración de sesión sin estado (típico con JWT)
+        // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // <-- Considera añadir esto si usas JWT stateless
+
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

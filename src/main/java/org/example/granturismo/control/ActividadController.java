@@ -8,6 +8,7 @@ import org.example.granturismo.mappers.ActividadMapper;
 import org.example.granturismo.mappers.DestinoMapper;
 import org.example.granturismo.modelo.Actividad;
 import org.example.granturismo.modelo.Destino;
+import org.example.granturismo.security.PermitRoles;
 import org.example.granturismo.servicio.IActividadService;
 import org.example.granturismo.servicio.IDestinoService;
 import org.springframework.data.domain.Page;
@@ -29,17 +30,20 @@ public class ActividadController {
     private final ActividadMapper actividadMapper;
 
     @GetMapping
+    @PermitRoles({"ADMIN", "USER", "PROV"})
     public ResponseEntity<List<ActividadDTO>> findAll() {
         List<ActividadDTO> list = actividadMapper.toDTOs(actividadService.findAll());
         return ResponseEntity.ok(list);
     }
     @GetMapping("/{id}")
+    @PermitRoles({"ADMIN", "USER", "PROV"})
     public ResponseEntity<ActividadDTO> findById(@PathVariable("id") Long id) {
         Actividad obj = actividadService.findById(id);
         return ResponseEntity.ok(actividadMapper.toDTO(obj));
     }
 
     @PostMapping
+    @PermitRoles({"ADMIN"})
     public ResponseEntity<Void> save(@Valid @RequestBody ActividadDTO.ActividadCADTO dto) {
         ActividadDTO obj = actividadService.saveD(dto);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdActividad()).toUri();
@@ -47,18 +51,21 @@ public class ActividadController {
     }
 
     @PutMapping("/{id}")
+    @PermitRoles({"ADMIN,PROV"})
     public ResponseEntity<ActividadDTO> update(@Valid @RequestBody ActividadDTO.ActividadCADTO dto, @PathVariable("id") Long id) {
         ActividadDTO obj = actividadService.updateD(dto, id);
         return ResponseEntity.ok(obj);
     }
 
     @DeleteMapping("/{id}")
+    @PermitRoles({"ADMIN"})
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         actividadService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/pageable")
+    @PermitRoles({"ADMIN", "USER", "PROV"})
     public ResponseEntity<org.springframework.data.domain.Page<ActividadDTO>> listPage(Pageable pageable){
         Page<ActividadDTO> page = actividadService.listaPage(pageable).map(e -> actividadMapper.toDTO(e));
         return ResponseEntity.ok(page);

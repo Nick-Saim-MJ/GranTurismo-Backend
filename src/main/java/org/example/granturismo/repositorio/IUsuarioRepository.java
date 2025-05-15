@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface IUsuarioRepository extends ICrudGenericoRepository<Usuario, Long>{
 
     Optional<Usuario> findOneByUser(String user);
+    Optional<Usuario> findByTokenVerificacion(String token);
+
 }
